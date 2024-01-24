@@ -28,13 +28,13 @@ if response.status_code == 200:
     urls = [i.get('href') for i in soup.find_all('a', attrs={"class":"ui-search-item__group__element ui-search-link__title-card ui-search-link"})]
 
     dom = etree.HTML(str(soup))
-    precios = dom.xpath('//li[contains(@class, "ui-search-layout__item")]//span[@class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"]/span[@class="andes-money-amount__fraction"]/text()')
+    precio = dom.xpath('//li[contains(@class, "ui-search-layout__item")]//span[@class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"]/span[@class="andes-money-amount__fraction"]/text()')
 
     # Crear un DataFrame
     df = pd.DataFrame({
-        'Cubierta': titulos,
+        'Titulo': titulos,
         'Enlace': urls,
-        'Precios': precios
+        'Precio': precio
     })
 
     print("Se creó el DataFrame")
@@ -42,7 +42,7 @@ if response.status_code == 200:
     # Agregar columnas para los nuevos datos
     df['Vendedor'] = ""
     df['Detalles'] = ""
-    df['Cantidad'] = ""
+    df['Cantidad Disponible'] = ""
 
     print("Se agregaron las columnas para iterar")
 
@@ -60,7 +60,7 @@ if response.status_code == 200:
         # Asignar los valores a las columnas correspondientes
         df.at[index, 'Vendedor'] = vendedor.text if vendedor else "No disponible"
         df.at[index, 'Detalles'] = detalles.text if detalles else "No disponible"
-        df.at[index, 'Cantidad'] = cantidad.text if cantidad else "No disponible"
+        df.at[index, 'Cantidad Disponible'] = cantidad.text if cantidad else "No disponible"
 
     print("Espere un momento")
 
