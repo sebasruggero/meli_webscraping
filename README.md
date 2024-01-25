@@ -20,3 +20,30 @@ Variables que se extrayeron diariamente
 14. Categoria 3era Apertura
 15. Categoria 4ta Apertura
 
+Categorias 
+
+Aceites y Vinagres
+Alimentos Instantáneos
+Arroz, Legumbres y Semillas
+Azúcar y Endulzantes
+Bolsas para Cocinar
+Cajas Navideñas
+Canastas Básicas
+Cereales y Barras
+Dulces y Chocolates
+Encurtidos y Conservas
+Harina
+Infusiones
+Levaduras
+Mermeladas, Dulces y Miel
+Pan Rallado
+Panadería
+Pastas
+Pulpas de Fruta
+Repostería y Pastelería
+Saborizantes y Jarabes
+Salsas y Condimentos
+Snacks
+
+Total de Registros
+
