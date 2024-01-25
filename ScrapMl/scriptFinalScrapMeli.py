@@ -11,8 +11,10 @@ texto_busqueda = input("Ingrese lo que desea buscar en MercadoLibre: ")
 
 # Función para obtener la URL de la página de resultados según el número de página
 def get_search_url(page_number):
-    base_url = f'https://listado.mercadolibre.com.ar/{texto_busqueda}'
+    texto_busqueda_formateado = texto_busqueda.replace(' ', '-')
+    base_url = f'https://listado.mercadolibre.com.ar/{texto_busqueda_formateado}'
     if page_number > 1:
+        # Ajustando la URL para páginas más allá de la primera
         return f'{base_url}_Desde_{(page_number - 1) * 50 + 1}_NoIndex_True'
     else:
         return base_url
