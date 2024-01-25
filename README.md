@@ -2,7 +2,7 @@
 
 ##### Este proyecto tiene como objetivo realizar el seguimiento de precios de los productos de mercadolibre.com.ar para ello se relevaron datos en el tiempo de productos de consumo masivo alimenticios , de ropa etc.
 
-####### Variables que se extrayeron diariamente
+Variables que se extrayeron diariamente
 
 1. Producto 
 2. Enlace de la publicacion
