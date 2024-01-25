@@ -81,7 +81,7 @@ for page_number in range(1, max_pages + 1):
             estado = product_soup.find('span', attrs={"class":"ui-pdp-subtitle"})
             oferta = product_soup.find('div', attrs={"class":"ui-pdp-promotions-pill-label ui-pdp-background-color--BLUE ui-pdp-color--WHITE ui-pdp-size--XXSMALL ui-pdp-family--SEMIBOLD"})
             publicacion = product_soup.find('span', attrs={"class":"ui-pdp-color--BLACK ui-pdp-family--SEMIBOLD"})
-            familia = product_soup.find('span', attrs={"class":"andes-breadcrumb__link"})
+            familia_elements = product_soup.find_all('li', class_='andes-breadcrumb__item')
 
             # Asignar los valores a las columnas correspondientes
             df.at[index, 'Vendedor'] = vendedor.text if vendedor else "No disponible"
@@ -90,8 +90,11 @@ for page_number in range(1, max_pages + 1):
             df.at[index, 'Estado'] = estado.text if estado else "No disponible"
             df.at[index, 'Oferta'] = oferta.text if oferta else "No disponible"
             df.at[index, 'Publicacion'] = publicacion.text if publicacion else "No disponible"
-            df.at[index, 'Familia'] = familia.text if familia else "No disponible"
-
+            
+            # Extraer información de las familias
+            for i, familia_element in enumerate(familia_elements):
+                familia_column_name = f'Familia{i+1}'
+                df.at[index, familia_column_name] = familia_element.find('a', class_='andes-breadcrumb__link').text if familia_element else "No disponible"
 
         # Agregar el DataFrame al listado
         all_dfs.append(df)
