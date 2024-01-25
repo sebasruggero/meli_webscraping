@@ -47,7 +47,9 @@ Categories:
 21. Salsas y Condimentos (Sauces and Condiments)
 22. Snacks (Snacks)
 
-Total Records: [Número total de registros]
+Total Records: 
+
+Period:
 
 
 ## Español
@@ -70,9 +72,7 @@ Variables que se extrayeron diariamente
 14. Categoria 3era Apertura
 15. Categoria 4ta Apertura
 
-Categorias 
-
-Aquí están algunas de las categorías presentes en el código proporcionado:
+Categorias :
 
 1. **Aceites y Vinagres**
 2. **Alimentos Instantáneos**
@@ -97,7 +97,8 @@ Aquí están algunas de las categorías presentes en el código proporcionado:
 21. **Salsas y Condimentos**
 22. **Snacks**
 
-Estas son las categorías extraídas de los enlaces proporcionados en el código HTML. Ten en cuenta que esta lista puede no ser exhaustiva, ya que depende de los enlaces presentes en el código y puede haber más categorías que no estén incluidas aquí.
-Total de Registros
+Total Registros:
+
+Periodo:
 
 
