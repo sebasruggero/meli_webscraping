@@ -81,6 +81,7 @@ for page_number in range(1, max_pages + 1):
             estado = product_soup.find('span', attrs={"class":"ui-pdp-subtitle"})
             oferta = product_soup.find('div', attrs={"class":"ui-pdp-promotions-pill-label ui-pdp-background-color--BLUE ui-pdp-color--WHITE ui-pdp-size--XXSMALL ui-pdp-family--SEMIBOLD"})
             publicacion = product_soup.find('span', attrs={"class":"ui-pdp-color--BLACK ui-pdp-family--SEMIBOLD"})
+            familia = product_soup.find('span', attrs={"class":"andes-breadcrumb__link"})
 
             # Asignar los valores a las columnas correspondientes
             df.at[index, 'Vendedor'] = vendedor.text if vendedor else "No disponible"
@@ -89,6 +90,8 @@ for page_number in range(1, max_pages + 1):
             df.at[index, 'Estado'] = estado.text if estado else "No disponible"
             df.at[index, 'Oferta'] = oferta.text if oferta else "No disponible"
             df.at[index, 'Publicacion'] = publicacion.text if publicacion else "No disponible"
+            df.at[index, 'Familia'] = familia.text if familia else "No disponible"
+
 
         # Agregar el DataFrame al listado
         all_dfs.append(df)
@@ -96,8 +99,10 @@ for page_number in range(1, max_pages + 1):
     else:
         print(f"Failed to retrieve data from page {page_number}. Status code: {response.status_code}")
         
-fecha_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
-nombre_archivo = f'{texto_busqueda}_{fecha_actual}_pages.csv'
+texto_archivo_formateado = texto_busqueda.replace(' ', '_')
+
+fecha_actual = datetime.now().strftime("%Y_%m_%d_%H%M%S")
+nombre_archivo = f'{texto_archivo_formateado}_{fecha_actual}.csv'
 
 final_df = pd.concat(all_dfs, ignore_index=True)
 final_df.to_csv(nombre_archivo, index=False)
