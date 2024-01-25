@@ -72,29 +72,32 @@ Variables que se extrayeron diariamente
 
 Categorias 
 
-Aceites y Vinagres
-Alimentos Instantáneos
-Arroz, Legumbres y Semillas
-Azúcar y Endulzantes
-Bolsas para Cocinar
-Cajas Navideñas
-Canastas Básicas
-Cereales y Barras
-Dulces y Chocolates
-Encurtidos y Conservas
-Harina
-Infusiones
-Levaduras
-Mermeladas, Dulces y Miel
-Pan Rallado
-Panadería
-Pastas
-Pulpas de Fruta
-Repostería y Pastelería
-Saborizantes y Jarabes
-Salsas y Condimentos
-Snacks
+Aquí están algunas de las categorías presentes en el código proporcionado:
 
+1. **Aceites y Vinagres**
+2. **Alimentos Instantáneos**
+3. **Arroz, Legumbres y Semillas**
+4. **Azúcar y Endulzantes**
+5. **Bolsas para Cocinar**
+6. **Cajas Navideñas**
+7. **Canastas Básicas**
+8. **Cereales y Barras**
+9. **Dulces y Chocolates**
+10. **Encurtidos y Conservas**
+11. **Harina**
+12. **Infusiones**
+13. **Levaduras**
+14. **Mermeladas, Dulces y Miel**
+15. **Pan Rallado**
+16. **Panadería**
+17. **Pastas**
+18. **Pulpas de Fruta**
+19. **Repostería y Pastelería**
+20. **Saborizantes y Jarabes**
+21. **Salsas y Condimentos**
+22. **Snacks**
+
+Estas son las categorías extraídas de los enlaces proporcionados en el código HTML. Ten en cuenta que esta lista puede no ser exhaustiva, ya que depende de los enlaces presentes en el código y puede haber más categorías que no estén incluidas aquí.
 Total de Registros
 
 
