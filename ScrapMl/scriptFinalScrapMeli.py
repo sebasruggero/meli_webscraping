@@ -113,3 +113,6 @@ for producto in productos:
 
     # Imprimir el mensaje con la fecha y hora
     print(f"Scraping completado para {producto}. El archivo fue exportado con éxito. Fecha y hora: {fecha_actual}")
+
+
+
