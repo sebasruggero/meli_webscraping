@@ -4,19 +4,19 @@ import pandas as pd
 from lxml import etree
 from datetime import datetime
 import time
+import random
 
-# Lista de productos a buscar en MercadoLibre
-productos = ["aceite de oliva", "papel higienico", "yerba mate", "pañales","papel higienico", "leche descremada", "fernet", "coca cola"]
+# Lista de productos
+productos = ["aceite de oliva", "aceite de girasol", "arroz", "leche descremada", "yerba", "azúcar", "harina",
+             "fideos", "café", "té", "pañales", "papel higienico", "yogur", "queso", "galletas", "cereal", "agua mineral"]
 
-# Definir la duración de la pausa en segundos
-pausa_entre_productos = 5  # Adjust the pause duration as needed
+for producto in productos:
+    # Obtener la URL de la página de resultados según el número de página
+    texto_busqueda = producto
+    texto_busqueda_formateado = texto_busqueda.replace(' ', '-')
 
-for texto_busqueda in productos:
-    print(f"Scraping data for: {texto_busqueda}")
-    
+    # Función para obtener la URL de la página de resultados según el número de página
     def get_search_url(page_number):
-        # Función para obtener la URL de la página de resultados según el número de página
-        texto_busqueda_formateado = texto_busqueda.replace(' ', '-')
         base_url = f'https://listado.mercadolibre.com.ar/{texto_busqueda_formateado}'
         if page_number > 1:
             # Ajustando la URL para páginas más allá de la primera
@@ -28,93 +28,96 @@ for texto_busqueda in productos:
     all_dfs = []
 
     # Número máximo de páginas a scrapear (ajústalo según sea necesario)
-    max_pages = 1
+    max_pages = 2
 
-    # Bucle para iterar sobre los productos
-    for texto_busqueda in productos:
-        print(f"Scraping data for: {texto_busqueda}")
-        # Bucle para iterar sobre las páginas
-        for page_number in range(1, max_pages + 1):
-            # Obtener la URL de la página actual
-            current_url = get_search_url(page_number)
-            
-            # Introducir una pausa antes de cada solicitud
-            time.sleep(pausa_entre_productos)
+    # Bucle para iterar sobre las páginas
+    for page_number in range(1, max_pages + 1):
+        # Obtener la URL de la página actual
+        current_url = get_search_url(page_number)
 
-            # Realizar la solicitud para la página actual
-            response = requests.get(current_url)
-            if response.status_code == 200:
-                print(f"Scraping data for {texto_busqueda}, page {page_number}")
+        # Agregar un tiempo de espera aleatorio entre las solicitudes
+        time.sleep(random.uniform(2, 5))  # espera de 2 a 5 segundos
 
-                # Parsear la página actual
-                soup = BeautifulSoup(response.content, 'html.parser')
+        # Cambiar el User-Agent de manera aleatoria
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.3'}
+        response = requests.get(current_url, headers=headers)
 
-                # Tu código para extraer información de la página va aquí
-                titulos = soup.find_all('h2', attrs={"class":"ui-search-item__title"})
-                titulos = [i.text for i in titulos]
+        # Verificar el código de estado
+        if response.status_code == 200:
+            print(f"Scraping data from page {page_number}")
 
-                urls = soup.find_all('a', attrs={"class":"ui-search-item__group__element ui-search-link__title-card ui-search-link"})
-                urls = [i.get('href') for i in urls]
+            # Parsear la página actual
+            soup = BeautifulSoup(response.content, 'html.parser')
 
-                dom = etree.HTML(str(soup))
-                precios = dom.xpath('//li[contains(@class, "ui-search-layout__item")]//span[@class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"]/span[@class="andes-money-amount__fraction"]/text()')
+            # Tu código para extraer información de la página va aquí
+            titulos = soup.find_all('h2', attrs={"class": "ui-search-item__title"})
+            titulos = [i.text for i in titulos]
 
-                # Crear un DataFrame para la página actual
-                df = pd.DataFrame({
-                    'Titulo': titulos,
-                    'Enlace': urls,
-                    'Precios': precios
-                    })
+            urls = soup.find_all('a', attrs={"class": "ui-search-item__group__element ui-search-link__title-card ui-search-link"})
+            urls = [i.get('href') for i in urls]
 
-                # Agregar columnas adicionales
-                df['Vendedor'] = ""
-                df['Detalles'] = ""
-                df['Cantidad'] = ""
-                df['Estado'] = ""
-                df['Oferta'] = ""
-                df['Publicacion'] = ""
-                df['Fecha_Ejecucion'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            dom = etree.HTML(str(soup))
+            precios = dom.xpath('//li[contains(@class, "ui-search-layout__item")]//span[@class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"]/span[@class="andes-money-amount__fraction"]/text()')
 
-                # Iterar sobre los enlaces y obtener información adicional
-                for index, row in df.iterrows():
-                    product_url = row['Enlace']
-                    
-                    # Introducir una pausa antes de cada solicitud de producto
-                    time.sleep(pausa_entre_productos)
+            # Crear un DataFrame para la página actual
+            df = pd.DataFrame({
+                'Titulo': titulos,
+                'Enlace': urls,
+                'Precios': precios
+            })
 
-                    product_response = requests.get(product_url)
-                    product_soup = BeautifulSoup(product_response.content, 'html.parser')
+            # Agregar columnas adicionales
+            df['Vendedor'] = ""
+            df['Detalles'] = ""
+            df['Cantidad'] = ""
+            df['Estado'] = ""
+            df['Oferta'] = ""
+            df['Publicacion'] = ""
+            df['Fecha_Ejecucion'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                    # Obtener el color y precio
-                    vendedor = product_soup.find('span', attrs={"class": "ui-pdp-color--BLUE ui-pdp-family--REGULAR"})
-                    detalles = product_soup.find('span', attrs={"class": "ui-pdp-subtitle"})
-                    cantidad = product_soup.find('span', attrs={"class":"ui-pdp-buybox__quantity__available"})
-                    estado = product_soup.find('span', attrs={"class":"ui-pdp-subtitle"})
-                    oferta = product_soup.find('div', attrs={"class":"ui-pdp-promotions-pill-label ui-pdp-background-color--BLUE ui-pdp-color--WHITE ui-pdp-size--XXSMALL ui-pdp-family--SEMIBOLD"})
-                    publicacion = product_soup.find('span', attrs={"class":"ui-pdp-color--BLACK ui-pdp-family--SEMIBOLD"})
-                    familia_elements = product_soup.find_all('li', class_='andes-breadcrumb__item')
+            # Iterar sobre los enlaces y obtener información adicional
+            for index, row in df.iterrows():
+                product_url = row['Enlace']
 
-                    # Asignar los valores a las columnas correspondientes
-                    df.at[index, 'Vendedor'] = vendedor.text if vendedor else "No disponible"
-                    df.at[index, 'Detalles'] = detalles.text if detalles else "No disponible"
-                    df.at[index, 'Cantidad'] = cantidad.text if cantidad else "No disponible"
-                    df.at[index, 'Estado'] = estado.text if estado else "No disponible"
-                    df.at[index, 'Oferta'] = oferta.text if oferta else "No disponible"
-                    df.at[index, 'Publicacion'] = publicacion.text if publicacion else "No disponible"
-                    
-                    # Extraer información de las familias
-                    for i, familia_element in enumerate(familia_elements):
-                        familia_column_name = f'Familia{i+1}'
-                        df.at[index, familia_column_name] = familia_element.find('a', class_='andes-breadcrumb__link').text if familia_element else "No disponible"
+                # Agregar un tiempo de espera aleatorio entre las solicitudes a las páginas de productos
+                time.sleep(random.uniform(1, 3))  # espera de 1 a 3 segundos
 
-                # Guardar el DataFrame en un archivo CSV
-                fecha_actual = datetime.now().strftime("%Y_%m_%d_%H%M%S")
-                texto_archivo_formateado = texto_busqueda.replace(' ', '_')
-                nombre_archivo = f'{texto_archivo_formateado}_page{page_number}_{fecha_actual}.csv'
-                df.to_csv(nombre_archivo, index=False)
+                product_response = requests.get(product_url, headers=headers)
+                product_soup = BeautifulSoup(product_response.content, 'html.parser')
 
-                print(f"Data for {texto_busqueda}, page {page_number} scraped successfully.")
-            else:
-                print(f"Failed to retrieve data for {texto_busqueda}, page {page_number}. Status code: {response.status_code}")
+                # Obtener el color y precio
+                vendedor = product_soup.find('span', attrs={"class": "ui-pdp-color--BLUE ui-pdp-family--REGULAR"})
+                detalles = product_soup.find('span', attrs={"class": "ui-pdp-subtitle"})
+                cantidad = product_soup.find('span', attrs={"class": "ui-pdp-buybox__quantity__available"})
+                estado = product_soup.find('span', attrs={"class": "ui-pdp-subtitle"})
+                oferta = product_soup.find('div', attrs={"class": "ui-pdp-promotions-pill-label ui-pdp-background-color--BLUE ui-pdp-color--WHITE ui-pdp-size--XXSMALL ui-pdp-family--SEMIBOLD"})
+                publicacion = product_soup.find('span', attrs={"class": "ui-pdp-color--BLACK ui-pdp-family--SEMIBOLD"})
+                familia_elements = product_soup.find_all('li', class_='andes-breadcrumb__item')
 
-    print(f"Scraping completed for {texto_busqueda}. CSV files were exported successfully.")
+                # Asignar los valores a las columnas correspondientes
+                df.at[index, 'Vendedor'] = vendedor.text if vendedor else "No disponible"
+                df.at[index, 'Detalles'] = detalles.text if detalles else "No disponible"
+                df.at[index, 'Cantidad'] = cantidad.text if cantidad else "No disponible"
+                df.at[index, 'Estado'] = estado.text if estado else "No disponible"
+                df.at[index, 'Oferta'] = oferta.text if oferta else "No disponible"
+                df.at[index, 'Publicacion'] = publicacion.text if publicacion else "No disponible"
+
+                # Extraer información de las familias
+                for i, familia_element in enumerate(familia_elements):
+                    familia_column_name = f'Familia{i + 1}'
+                    df.at[index, familia_column_name] = familia_element.find('a', class_='andes-breadcrumb__link').text if familia_element else "No disponible"
+
+            # Agregar el DataFrame al listado
+            all_dfs.append(df)
+
+        else:
+            print(f"Failed to retrieve data from page {page_number}. Status code: {response.status_code}")
+
+    # ...
+
+    # Exportar el DataFrame a un archivo CSV
+    final_df = pd.concat(all_dfs, ignore_index=True)
+    final_df.to_csv(f'{texto_busqueda_formateado}_{datetime.now().strftime("%Y_%m_%d_%H%M%S")}.csv', index=False)
+
+    # Imprimir el mensaje con la fecha y hora
+    print(f"Scraping completado para {producto}. El archivo fue exportado con éxito.")

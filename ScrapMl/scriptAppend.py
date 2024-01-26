@@ -1,6 +1,7 @@
 import os
 import csv
 import codecs
+from datetime import datetime
 
 # Paso 1: Obtener la lista de archivos CSV en la carpeta
 carpeta = './data/'
@@ -19,14 +20,25 @@ for archivo_csv in archivos_csv:
         for fila in lector_csv:
             datos_combinados.append(fila)
 
+# Obtener la fecha y hora actual
+fecha_hora_actual = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+# Agregar la fecha y hora al nombre del archivo combinado
+nombre_archivo_combinado = f'combinado_{fecha_hora_actual}.csv'
+ruta_salida = os.path.join(carpeta, nombre_archivo_combinado)
+
 # Paso 4: Guardar los datos combinados en un nuevo archivo CSV
-ruta_salida = './data/combinado.csv'
 with codecs.open(ruta_salida, 'w', encoding='utf-8') as file:
     escritor_csv = csv.writer(file)
+    
+    # Escribir una fila con la fecha y hora actual como metadatos
+    escritor_csv.writerow(['Fecha y Hora de Creación', fecha_hora_actual])
+
     # Escribir el encabezado si existe
     if encabezado:
         escritor_csv.writerow(encabezado)
+    
     # Escribir los datos combinados
     escritor_csv.writerows(datos_combinados)
 
-print("¡Operación completada con éxito!")
+print(f"¡Operación completada con éxito! Archivo combinado creado: {nombre_archivo_combinado}")
