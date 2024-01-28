@@ -1,8 +1,31 @@
+Certainly! Here's the updated README with the provided list of products:
+
+```markdown
 # Scraping Inflation Rate in Meli in Milei Government
 
 ## Project Overview
 
-This project aims to track the prices of products on [mercadolibre.com.ar](https://www.mercadolibre.com.ar/). Data is collected over time for everyday consumer products, including food and clothing. The goal is to analyze the price trends and calculate inflation rates based on the collected data.
+This project aims to track the prices of products on [mercadolibre.com.ar](https://www.mercadolibre.com.ar/). Data is collected over time for everyday consumer products, including the following selected products:
+
+1. Aceite de Oliva (Olive Oil)
+2. Aceite de Girasol (Sunflower Oil)
+3. Arroz (Rice)
+4. Leche Descremada (Skimmed Milk)
+5. Yerba (Yerba Mate)
+6. Azúcar (Sugar)
+7. Harina (Flour)
+8. Fideos (Noodles)
+9. Café (Coffee)
+10. Té (Tea)
+11. Pañales (Diapers)
+12. Papel Higiénico (Toilet Paper)
+13. Yogur (Yogurt)
+14. Queso (Cheese)
+15. Galletas (Biscuits)
+16. Cereal
+17. Agua Mineral (Mineral Water)
+
+The goal is to analyze the price trends and calculate inflation rates based on the collected data.
 
 ### Variables Extracted on a Daily Basis
 
@@ -71,3 +94,6 @@ Power BI is utilized for the visualization and analysis of the collected data. I
 [Provide details on the structure of your project, how to set it up, dependencies, and any other relevant information.]
 
 ...
+```
+
+Feel free to adjust any other details or add more information as needed for your project.
