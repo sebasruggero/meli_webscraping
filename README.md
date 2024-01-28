@@ -1,6 +1,3 @@
-Certainly! Here's the updated README with the provided list of products:
-
-```markdown
 # Scraping Inflation Rate in Meli in Milei Government
 
 ## Project Overview
@@ -91,9 +88,4 @@ Power BI is utilized for the visualization and analysis of the collected data. I
 
 ## Project Structure
 
-[Provide details on the structure of your project, how to set it up, dependencies, and any other relevant information.]
 
-...
-```
-
-Feel free to adjust any other details or add more information as needed for your project.
