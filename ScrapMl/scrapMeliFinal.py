@@ -5,24 +5,9 @@ from lxml import etree
 from datetime import datetime
 
 # Lista de productos
-productos = ["aceite de oliva",
-             "aceite de girasol", 
-             "arroz",
-             "tallarín", 
-             "leche descremada", 
-             "yerba", 
-             "azúcar", 
-             "harina", 
-             "fideos", 
-             "café", 
-             "té", 
-             "pañales", 
-             "papel higienico",  
-             "yogur",
-             "queso", 
-             "galletas", 
-             "cereal", 
-             "agua mineral"]
+productos = ["aceite de oliva","aceite de girasol", "arroz","tallarín", "leche descremada", "yerba", 
+             "azúcar", "harina", "fideos", "café", "té", "pañales", "papel higienico",  "yogur",
+             "queso", "galletas", "cereal", "agua mineral"]
 
 for producto in productos:
     # Obtener la URL de la página de resultados según el número de página
