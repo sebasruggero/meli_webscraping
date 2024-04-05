@@ -6,14 +6,14 @@ from datetime import datetime
 
 # Lista de productos
 productos = [
-"""   "aceite de girasol",
+  "aceite de girasol",
   "aceite de oliva",
   "agua mineral",
   "arroz",
   "azúcar",
   "café",
   "cereal",
-  "fideos", """
+  "fideos",
   "galletas",
   "harina",
   "leche descremada",
