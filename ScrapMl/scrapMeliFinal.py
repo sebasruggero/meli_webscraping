@@ -46,7 +46,7 @@ for producto in productos:
     all_dfs = []
 
     # Número máximo de páginas a scrapear (ajústalo según sea necesario)
-    max_pages = 3
+    max_pages = 2
 
     # Bucle para iterar sobre las páginas
     for page_number in range(1, max_pages + 1):
