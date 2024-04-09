@@ -5,8 +5,8 @@ from lxml import etree
 from datetime import datetime
 
 # Lista de productos
-productos = [
-  "aceite de girasol",
+productos = [ 
+"aceite de girasol",
   "aceite de oliva",
   "agua mineral",
   "arroz",
