@@ -16,7 +16,6 @@ productos = [
   "fideos",
   "galletas",
   "harina",
-  "leche descremada",
   "papel higienico",
   "pañales",
   "queso",
